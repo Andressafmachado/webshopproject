@@ -5,13 +5,19 @@ const { Router } = express;
 
 const router = new Router();
 
-router.get("/", async (req, res, next) => {
+router.get("/:categoryId", async (req, res, next) => {
   try {
-    console.log("Im getting all the categories");
-    const category = await Category.findAll({
+    console.log("I'm in the category page");
+
+    const categoryId = parseInt(req.params.categoryId);
+    const category = await Category.findByPk(categoryId, {
       include: [Product],
     });
-    res.send(category);
+    if (!category) {
+      res.status(404).send("category not found");
+    } else {
+      res.send(category);
+    }
   } catch (e) {
     next(e);
   }
