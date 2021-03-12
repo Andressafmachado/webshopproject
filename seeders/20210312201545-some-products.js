@@ -10,9 +10,7 @@ module.exports = {
           description: "white",
           price: 200,
           imageUrl: "linkhere",
-
           categoryId: 1,
-
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -21,7 +19,6 @@ module.exports = {
           description: "white",
           price: 200,
           imageUrl: "linkhere",
-
           categoryId: 2,
           createdAt: new Date(),
           updatedAt: new Date(),
