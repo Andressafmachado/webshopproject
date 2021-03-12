@@ -1,7 +1,8 @@
 const express = require("express");
 const Product = require("../models").product;
-const { Router } = express;
+const Category = require("../models").category;
 
+const { Router } = express;
 const router = new Router();
 
 // router.get("/", (request, response) => response.send("Welcome to products!"));
@@ -9,7 +10,9 @@ const router = new Router();
 router.get("/", async (req, res, next) => {
   try {
     console.log("Im getting all the products");
-    const products = await Product.findAll();
+    const products = await Product.findAll({
+      include: [Category],
+    });
     res.send(products);
   } catch (e) {
     next(e);
