@@ -8,7 +8,7 @@ const router = new Router();
 
 // router.get("/", (request, response) => response.send("Welcome to admin area!"));
 
-//http :4000/secret Authorization:"Bearer JWThere" +
+//http :4000/admin Authorization:"Bearer JWThere" +
 // add new product
 router.post("/", async (request, response, next) => {
   try {
@@ -34,6 +34,11 @@ router.post("/", async (request, response, next) => {
 
     const data = toData(parts[1]);
     const { userId } = data;
+    const { userIsAdmin } = data;
+
+    if (userIsAdmin === false) {
+      return response.status(400).send("You are not Admin");
+    }
 
     const user = await User.findByPk(userId);
     if (!user) {

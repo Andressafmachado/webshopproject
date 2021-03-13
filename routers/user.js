@@ -21,7 +21,7 @@ router.get("/", async (req, res, next) => {
 });
 
 //Create a new user
-// http POST :4000/users email="andressa@machado.com" password="andreia" firstName="andreia" lastName="machado" address="cmourao"
+// http POST :4000/users/signup email="andressa@machado.com" password="andreia" firstName="andreia" lastName="machado" address="cmourao"
 router.post("/signup", async (req, res, next) => {
   try {
     const {
