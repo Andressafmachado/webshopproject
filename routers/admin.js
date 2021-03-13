@@ -1,14 +1,16 @@
 const { Router } = require("express");
 const { toJWT, toData } = require("../auth/jwt");
 const User = require("../models").user;
+const Product = require("../models").product;
 const bcrypt = require("bcrypt");
 // const authMiddleware = require("../auth/middleware");
 const router = new Router();
 
 // router.get("/", (request, response) => response.send("Welcome to admin area!"));
 
-//http :4000/secret Authorization:"Bearer JWThere"
-router.get("/", async (request, response, next) => {
+//http :4000/secret Authorization:"Bearer JWThere" +
+// add new product
+router.post("/", async (request, response, next) => {
   try {
     const { authorization } = request.headers;
 
@@ -41,33 +43,29 @@ router.get("/", async (request, response, next) => {
     console.log("user test:", user);
 
     const message = `Welcome to the secret area ${user.firstName}`;
-    response.send(message);
-  } catch (error) {
-    console.log(error);
 
-    response.send(400);
-  }
-});
-
-//Create a new user
-// http POST :4000/users email="andressa@machado.com" password="andreia" firstName="andreia" lastName="machado" address="cmourao"
-router.post("/", async (req, res, next) => {
-  try {
-    const { name, price, imageUrl, description } = req.body;
+    const { name, price, imageUrl, description } = request.body;
 
     if (!name || !price) {
-      res.status(400).send("Must provide more info");
+      response.status(400).send("Must provide more info");
     } else {
-      const newProduct = await User.create({
+      const newProduct = await Product.create({
         name,
         price,
         imageUrl,
         description,
       });
-      res.json(newProduct);
+      response.json(newProduct);
     }
-  } catch (e) {
-    next(e);
+
+    // response.send(message);
+  } catch (error) {
+    console.log(error);
+
+    next(error);
   }
 });
+
 module.exports = router;
+
+//http :4000/admin Authorization:"Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsImlhdCI6MTYxNTU5MzQzMywiZXhwIjoxNjE1NjAwNjMzfQ.Y2riMAKMSeNx6qOg4qyW48RtWYOHLg4Ql9P3sYTGe7c" name="newprodc" price=400
