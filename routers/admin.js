@@ -36,9 +36,9 @@ router.post("/", async (request, response, next) => {
     const { userId } = data;
     const { userIsAdmin } = data;
 
-    if (userIsAdmin === false) {
-      return response.status(400).send("You are not Admin");
-    }
+    // if (userIsAdmin === false) {
+    //   return response.status(400).send("You are not Admin");
+    // }
 
     const user = await User.findByPk(userId);
     if (!user) {
