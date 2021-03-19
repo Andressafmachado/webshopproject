@@ -34,7 +34,7 @@ router.post("/signup", async (req, res, next) => {
       isAdmin,
     } = req.body;
 
-    if (!email || !password || !firstName || !lastName || !address) {
+    if (!email || !password) {
       res.status(400).send("Must provide more info");
     } else {
       const newUser = await User.create({
@@ -47,6 +47,22 @@ router.post("/signup", async (req, res, next) => {
         isAdmin,
       });
       res.json(newUser);
+    }
+  } catch (e) {
+    next(e);
+  }
+});
+
+//GET an user by id
+//OPEN AT THE BROWSER localhost:4000/user/id
+router.get("/:userId", async (req, res) => {
+  try {
+    const userId = parseInt(req.params.userId);
+    const user = await User.findByPk(userId);
+    if (!user) {
+      res.status(404).send("User not found");
+    } else {
+      res.send(user);
     }
   } catch (e) {
     next(e);

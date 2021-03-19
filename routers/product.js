@@ -9,6 +9,7 @@ const router = new Router();
 
 router.get("/", async (req, res, next) => {
   try {
+    // res.header("Access-Control-Allow-Origin", "*");
     console.log("Im getting all the products");
     const products = await Product.findAll({
       include: [Category],
