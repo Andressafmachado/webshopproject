@@ -1,5 +1,7 @@
 const express = require("express");
 const User = require("../models").user;
+// const Order = require("../models").order;
+// const Product = require("../models").product;
 const Order = require("../models").order;
 const bcrypt = require("bcrypt");
 const { Router } = express;
@@ -58,7 +60,9 @@ router.post("/signup", async (req, res, next) => {
 router.get("/:userId", async (req, res) => {
   try {
     const userId = parseInt(req.params.userId);
-    const user = await User.findByPk(userId);
+    const user = await User.findByPk(userId, {
+      include: [Order],
+    });
     if (!user) {
       res.status(404).send("User not found");
     } else {

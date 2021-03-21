@@ -20,4 +20,20 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+//GET a product by id
+//OPEN AT THE BROWSER localhost:4000/product/id
+router.get("/:productId", async (req, res) => {
+  try {
+    const productId = parseInt(req.params.productId);
+    const product = await Product.findByPk(productId);
+    if (!product) {
+      res.status(404).send("User not found");
+    } else {
+      res.send(product);
+    }
+  } catch (e) {
+    next(e);
+  }
+});
+
 module.exports = router;
